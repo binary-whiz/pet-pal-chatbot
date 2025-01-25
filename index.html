@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PetPal Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .chatbox { width: 300px; height: 400px; border: 1px solid #ccc; padding: 10px; overflow-y: scroll; }
+        .input-box { width: 100%; padding: 10px; }
+        button { padding: 10px; background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>PetPal Chatbot</h1>
+    <div class="chatbox" id="chatbox">
+        <!-- Chat messages will appear here -->
+    </div>
+    <input type="text" id="user_input" class="input-box" placeholder="Ask a question...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        function sendMessage() {
+            var user_input = document.getElementById("user_input").value;
+            if (user_input.trim() == "") return;
+            
+            // Display user's message in the chatbox
+            var chatbox = document.getElementById("chatbox");
+            chatbox.innerHTML += "<p><b>You:</b> " + user_input + "</p>";
+            document.getElementById("user_input").value = "";
+
+            // Send message to the Flask backend
+            fetch('https://your-flask-backend-url.onrender.com/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "message": user_input })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display the chatbot's response
+                chatbox.innerHTML += "<p><b>PetPal:</b> " + data.reply + "</p>";
+                chatbox.scrollTop = chatbox.scrollHeight;  // Scroll to the bottom
+            });
+        }
+    </script>
+
+</body>
+</html>
