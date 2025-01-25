@@ -99,7 +99,7 @@
                 });
 
                 const data = await response.json();
-                appendMessage("PetPal: " + data.reply, "bot");
+                appendMessage("PetPal: " + data.response, "bot");
             } catch (error) {
                 appendMessage("Error: Unable to connect to the chatbot server.", "bot");
             }
