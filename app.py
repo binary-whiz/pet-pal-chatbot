@@ -2,26 +2,21 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# Home route (this just shows a welcome message)
-@app.route('/')
-def home():
-    return "Welcome to PetPal chatbot! How can I assist you?"
+# Chatbot logic
+def petpal_chatbot(user_input):
+    responses = {
+        "How often should I groom my cat": "You should groom your cat once or twice a week.",
+        "What should I feed my dog": "Feed your dog high-quality dog food suitable for their size and age.",
+        "How can I train my pet": "Use positive reinforcement with treats and patience.",
+    }
+    return responses.get(user_input, "I'm sorry, I don't have an answer to that.")
 
-# Route for chatbot interaction
-@app.route('/ask', methods=['POST'])
-def ask():
-    # Get user input from the JSON request
-    user_input = request.json.get('message')
-    
-    # Simple logic for the chatbot (you can replace this with your AI logic)
-    if user_input:
-        # A simple response for now
-        response = f"PetPal is here! You asked: {user_input}"
-    else:
-        response = "Please ask a question!"
-
-    # Return the chatbot response as JSON
-    return jsonify({'response': response})
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    user_message = data.get('message', '')
+    reply = petpal_chatbot(user_message)
+    return jsonify({"reply": reply})
 
 if __name__ == '__main__':
     app.run(debug=True)
