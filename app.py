@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
+from flask_cors import CORS  # Import Flask-CORS to handle CORS issues
 
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Chatbot logic
 def petpal_chatbot(user_input):
@@ -16,7 +18,7 @@ def chat():
     data = request.json
     user_message = data.get('message', '')
     reply = petpal_chatbot(user_message)
-    return jsonify({"reply": reply})
+    return jsonify({"response": reply})  # Updated to match frontend key 'response'
 
 if __name__ == '__main__':
     app.run(debug=True)
