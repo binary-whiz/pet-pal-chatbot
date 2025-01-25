@@ -1,0 +1,13 @@
+# Create the pet_data.json file
+pet_data = {
+    "What food is safe for dogs?": "Dogs can eat cooked chicken, carrots, and rice. Avoid chocolate, onions, and grapes.",
+    "How often should I groom my cat?": "Cats should be brushed at least once a week. Long-haired cats need daily grooming.",
+    "What are common symptoms of illness in pets?": "Common symptoms include loss of appetite, vomiting, and lethargy. Consult a vet if needed."
+}
+
+# Save it as a JSON file
+import json
+with open("pet_data.json", "w") as file:
+    json.dump(pet_data, file)
+
+print("pet_data.json created successfully!")
